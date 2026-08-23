@@ -4,13 +4,13 @@
   <img alt="Alex Torres - Senior Software Engineer working across .NET, full-stack systems, and applied AI" src="./assets/header-light.svg" width="100%">
 </picture>
 
-I’m Alex, a software engineer in Texas. I use portfolio projects to study the parts of product
-engineering that are easy to flatten into buzzwords: domain boundaries, failure modes,
-accessible interfaces, and the tradeoffs behind AI-assisted workflows.
+I’m Alex, a U.S. Marine Corps veteran and software engineer focused on .NET, full-stack
+development, and applied AI.
 
-I tend to learn by building a complete slice, testing it hard, and writing down why it ended
-up that way. These repositories are less a catalog of technologies than a record of that
-process.
+Most of my professional work isn’t public, so the projects here are independent examples
+based on the kinds of systems and engineering problems I’ve worked on throughout my career.
+They don’t contain client code, data, or identifying details, but they do reflect how I
+approach architecture, accessibility, edge cases, AI integration, testing, and documentation.
 
 ## Selected work
 
@@ -75,4 +75,3 @@ application, and designed with failure paths in mind.
 
 I keep a more traditional account of my background on
 [LinkedIn](https://www.linkedin.com/in/alexander-t-3075203b/).
-
