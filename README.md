@@ -20,15 +20,19 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
   <img src="https://raw.githubusercontent.com/Alex5350/docsage/main/docs/assets/architecture.svg" alt="DocSage architecture showing the Next.js interface, FastAPI and ASP.NET Core parity APIs, PostgreSQL with pgvector, and Gemini and OpenAI providers" width="100%">
 </a>
 
-A full-stack document intelligence platform that turns Word, Excel, PDF, image, and text
-uploads into verifiable answers with citations back to the source page. Its agentic ingestion
-pipeline enriches content before retrieval, while personal, agency, and admin scopes keep
-access deliberate and SME approval gates what becomes shared knowledge.
+A full-stack **Agentic RAG** platform that turns Word, Excel, PDF, image, and text uploads
+into verifiable answers with citations back to the source page. Rather than simply chunking
+and embedding raw content, its agentic ingestion pipeline generates summaries, keywords,
+likely questions, table context, and image captions before indexing-bridging the vocabulary
+gap between how documents are written and how people ask questions. Personal, agency, and
+admin scopes keep access deliberate, while SME approval gates what becomes shared knowledge.
 
-**Engineering focus:** Provider-qualified vector spaces let Gemini and OpenAI embeddings
-safely share one pgvector store. FastAPI and ASP.NET Core implementations honor the same
-contract, authentication sessions, and deterministic offline embedding algorithm, allowing
-the complete workflow to run without API keys and be parity-tested across runtimes.
+**Engineering focus:** Provider-qualified vector spaces safely support Gemini’s native
+multimodal embeddings and OpenAI’s text embeddings in one pgvector store. Query-time
+retrieval remains a single indexed vector search, while FastAPI and ASP.NET Core
+implementations share the same API contract, authentication sessions, and deterministic
+offline embedding algorithm-allowing ingestion, approvals, retrieval, citations, and chat
+to run without API keys and be parity-tested across runtimes.
 
 ---
 
