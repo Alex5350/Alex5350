@@ -32,7 +32,7 @@ finding integration mistakes that unit tests cannot see.
 
 ---
 
-### [LedgerLite](https://github.com/Alex5350/ledgerlite)
+### [LedgerLite API](https://github.com/Alex5350/ledgerlite)
 
 A personal-finance API where the domain has real invariants: journal entries must balance,
 closed fiscal periods are immutable, account numbers are unique within a period, and budget
