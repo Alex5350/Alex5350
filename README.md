@@ -14,6 +14,28 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 ## Selected work
 
+### [VideoScheduler](https://github.com/Alex5350/videoscheduler)
+
+<a href="https://github.com/Alex5350/videoscheduler">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Alex5350/videoscheduler/main/docs/screenshots/shot-schedule-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Alex5350/videoscheduler/main/docs/screenshots/shot-schedule.png">
+    <img src="https://raw.githubusercontent.com/Alex5350/videoscheduler/main/docs/screenshots/shot-schedule.png" alt="VideoScheduler day schedule showing equipment availability and reservations" width="100%">
+  </picture>
+</a>
+
+A full-stack video-equipment scheduling system built with Next.js 16, PostgreSQL, Drizzle
+ORM, Tailwind CSS v4, and shadcn/ui. It coordinates studios, portable kits, and rover
+stations across regional offices with conflict-free one-off and recurring reservations,
+DST-correct time handling, Microsoft Teams integration, and calendar exports.
+
+**Engineering focus:** Pure domain rules handle conflicts, recurrence, and time zones, while
+PostgreSQL row locks close last-slot race conditions. Authentication and Teams use swappable
+boundaries for Entra ID and Microsoft Graph. Validation includes 35 domain tests and 20
+real-HTTP integration suites.
+
+---
+
 ### [AssetLite](https://github.com/Alex5350/assetlite)
 
 <a href="https://github.com/Alex5350/assetlite">
