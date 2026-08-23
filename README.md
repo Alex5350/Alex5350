@@ -12,6 +12,8 @@ based on the kinds of systems and engineering problems I’ve worked on througho
 They don’t contain client code, data, or identifying details, but they do reflect how I
 approach architecture, accessibility, edge cases, AI integration, testing, and documentation.
 
+**Résumé:** [View PDF](https://github.com/Alex5350/Alex5350/blob/main/assets/Alexander-Torres-Resume.pdf) · [Download a copy](https://github.com/Alex5350/Alex5350/raw/main/assets/Alexander-Torres-Resume.pdf)
+
 ## Selected work
 
 ### [DocSage](https://github.com/Alex5350/docsage)
