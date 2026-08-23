@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">Alex Torres, Senior Software Engineer</title>
+  <desc id="desc">A technical editorial header about software systems, interfaces, and applied AI.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#27313C" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect x="1" y="1" width="1198" height="318" rx="22" fill="#0D141B" stroke="#303B46" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="318" rx="22" fill="url(#grid)" opacity=".66"/>
+  <path d="M48 44H112" stroke="#56D4C0" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="124" cy="44" r="5" fill="#E0A85A"/>
+  <text x="64" y="122" fill="#F2EEE6" font-family="Iowan Old Style, Palatino Linotype, Georgia, serif" font-size="58" font-weight="600" letter-spacing="-1.5">Alex Torres</text>
+  <text x="67" y="164" fill="#56D4C0" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" letter-spacing="3">SENIOR SOFTWARE ENGINEER</text>
+  <text x="67" y="203" fill="#B7C1CA" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="17">.NET  /  full-stack systems  /  applied AI</text>
+  <text x="67" y="266" fill="#89949E" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="15" letter-spacing=".5">build  →  test  →  learn  →  refine</text>
+  <g transform="translate(810 52)" font-family="SFMono-Regular, Menlo, Consolas, monospace">
+    <path d="M84 47L179 102M179 126L84 181M203 102L290 47M203 126L290 181" fill="none" stroke="#52606D" stroke-width="2"/>
+    <circle cx="84" cy="47" r="6" fill="#56D4C0"/>
+    <circle cx="84" cy="181" r="6" fill="#E0A85A"/>
+    <circle cx="290" cy="47" r="6" fill="#E0A85A"/>
+    <circle cx="290" cy="181" r="6" fill="#56D4C0"/>
+    <rect x="135" y="88" width="112" height="52" rx="8" fill="#F2EEE6"/>
+    <text x="191" y="120" fill="#17202A" font-size="14" text-anchor="middle">system</text>
+    <rect x="15" y="22" width="126" height="46" rx="7" fill="#0D141B" stroke="#56D4C0" stroke-width="2"/>
+    <text x="78" y="51" fill="#D7DEE4" font-size="13" text-anchor="middle">domain</text>
+    <rect x="15" y="158" width="126" height="46" rx="7" fill="#0D141B" stroke="#E0A85A" stroke-width="2"/>
+    <text x="78" y="187" fill="#D7DEE4" font-size="13" text-anchor="middle">interface</text>
+    <rect x="237" y="22" width="126" height="46" rx="7" fill="#0D141B" stroke="#E0A85A" stroke-width="2"/>
+    <text x="300" y="51" fill="#D7DEE4" font-size="13" text-anchor="middle">evidence</text>
+    <rect x="237" y="158" width="126" height="46" rx="7" fill="#0D141B" stroke="#56D4C0" stroke-width="2"/>
+    <text x="300" y="187" fill="#D7DEE4" font-size="13" text-anchor="middle">feedback</text>
+  </g>
+</svg>
+
