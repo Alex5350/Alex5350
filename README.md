@@ -93,7 +93,7 @@ arbitrary SQL, or replace analyst judgment.
 ### [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web)
 
 <a href="https://github.com/Alex5350/ledgerlite-web">
-  <img src="https://raw.githubusercontent.com/Alex5350/ledgerlite-web/main/docs/screenshots/overview.png" alt="LedgerLite Web overview dashboard" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/ledgerlite-web/main/docs/diagrams/request-flow.svg" alt="LedgerLite Web architecture showing Interactive Auto across server and WebAssembly rendering, JWT authentication, the API, domain layer, and persistence" width="100%">
 </a>
 
 A full-stack .NET 10 reference application built around a double-entry ledger. I used it to
