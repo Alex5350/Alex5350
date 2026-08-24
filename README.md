@@ -31,6 +31,24 @@ time handling, and staffing constraints make tool behavior predictable for AI cl
 
 ---
 
+### [AssetLite](https://github.com/Alex5350/assetlite)
+
+<a href="https://github.com/Alex5350/assetlite">
+  <img src="https://raw.githubusercontent.com/Alex5350/assetlite/main/docs/diagrams/app-flow.svg" alt="AssetLite architecture showing Aspire orchestration across the Angular application, ASP.NET Core API, Clean Architecture layers, SQLite, and telemetry" width="100%">
+</a>
+
+A full-stack IT asset and inventory management system built with .NET 10, Angular 21,
+Tailwind CSS v4, and .NET Aspire. It handles asset lifecycle states, hierarchical offices,
+barcode and QR labels, search, and Excel/PDF exports through a Clean Architecture API and
+signals-first SPA.
+
+**Engineering focus:** Typed domain errors flow from lifecycle rules through RFC 9457
+responses into the UI, while Aspire orchestrates the API, SPA, telemetry, and health checks.
+The suite includes 339 backend and 62 Angular tests covering domain rules, API contracts,
+exports, and frontend behavior.
+
+---
+
 ### [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web)
 
 <a href="https://github.com/Alex5350/ledgerlite-web">
