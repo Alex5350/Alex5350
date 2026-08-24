@@ -14,6 +14,24 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 ## Selected work
 
+### [FlowInk](https://github.com/Alex5350/flowink)
+
+<a href="https://github.com/Alex5350/flowink">
+  <img src="https://raw.githubusercontent.com/Alex5350/flowink/main/docs/diagrams/architecture.svg" alt="FlowInk architecture showing how a JSON specification passes through the CLI and renderer into a committed animated README diagram" width="100%">
+</a>
+
+A cross-framework library and CLI that turns JSON specifications into self-contained,
+animated SVG architecture diagrams. Its TypeScript and C# renderers are held to byte parity,
+with integrations for React, Angular, and Blazor plus a CLI for generating diagrams that can
+be committed directly to READMEs.
+
+**Engineering focus:** CSS-only animation makes SMIL structurally impossible, keeping
+diagrams reliable inside GitHub’s `<img>` rendering context. Output contains no scripts or
+external references, escapes injected content, supports reduced-motion preferences, and is
+produced by zero-dependency rendering cores.
+
+---
+
 ### [VideoScheduler](https://github.com/Alex5350/videoscheduler)
 
 <a href="https://github.com/Alex5350/videoscheduler">
