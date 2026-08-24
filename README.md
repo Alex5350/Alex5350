@@ -18,6 +18,31 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 ## Selected work
 
+### [Mintmark](https://github.com/Alex5350/mintmark)
+
+<a href="https://github.com/Alex5350/mintmark">
+  <img src="https://raw.githubusercontent.com/Alex5350/mintmark/main/docs/assets/architecture.svg" alt="Mintmark architecture showing the Next.js web and Expo mobile clients over one ASP.NET Core API, PostgreSQL 18 with pgvector, S3-compatible storage, spot providers with failover, and the vision identification pipeline" width="100%">
+</a>
+
+A precious-metals collection tracker where collectors catalog gold and silver holdings,
+photograph a coin's obverse and reverse for grounded AI identification with top-five
+candidates they confirm, and watch melt and rules-based collectible valuations against live
+spot prices - every number carrying its provenance. Built on ASP.NET Core minimal APIs with
+.NET 10, EF Core and PostgreSQL 18 (pgvector + pg_trgm), S3-compatible image storage, Quartz
+jobs, a Next.js 16 web client, and an Expo SDK 57 mobile client whose guided two-shot capture
+is the reason the product exists on a phone.
+
+**Engineering focus:** Identification is retrieval-grounded - the vision contract demands
+per-field confidence and visual evidence (null beats guessing), hybrid search proposes
+candidates, and the user's confirmation lands in an append-only audit run. Catalog
+specifications carry source URLs or stay null rather than invented; a labeled deterministic
+offline evaluator exercises the entire pipeline without API keys; and the committed OpenAPI
+document is a CI-diff-gated artifact that generates the TypeScript client both frontends
+consume. The 118-test backend includes golden valuations proving low-mintage and common-date
+coins diverge from transparent premium factors alone.
+
+---
+
 ### [DocSage](https://github.com/Alex5350/docsage)
 
 <a href="https://github.com/Alex5350/docsage">
