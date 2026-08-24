@@ -14,6 +14,24 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 ## Selected work
 
+### [DocSage](https://github.com/Alex5350/docsage)
+
+<a href="https://github.com/Alex5350/docsage">
+  <img src="https://raw.githubusercontent.com/Alex5350/docsage/main/docs/assets/architecture.svg" alt="DocSage architecture showing the Next.js interface, FastAPI and ASP.NET Core parity APIs, PostgreSQL with pgvector, and Gemini and OpenAI providers" width="100%">
+</a>
+
+A full-stack document intelligence platform that turns Word, Excel, PDF, image, and text
+uploads into verifiable answers with citations back to the source page. Its agentic ingestion
+pipeline enriches content before retrieval, while personal, agency, and admin scopes keep
+access deliberate and SME approval gates what becomes shared knowledge.
+
+**Engineering focus:** Provider-qualified vector spaces let Gemini and OpenAI embeddings
+safely share one pgvector store. FastAPI and ASP.NET Core implementations honor the same
+contract, authentication sessions, and deterministic offline embedding algorithm, allowing
+the complete workflow to run without API keys and be parity-tested across runtimes.
+
+---
+
 ### [FlowInk](https://github.com/Alex5350/flowink)
 
 <a href="https://github.com/Alex5350/flowink">
