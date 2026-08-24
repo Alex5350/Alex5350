@@ -4,6 +4,8 @@
   <img alt="Alex Torres - Senior Software Engineer working across .NET, full-stack systems, and applied AI" src="./assets/header-light.svg" width="100%">
 </picture>
 
+<br>
+
 I’m Alex, a U.S. Marine Corps veteran and software engineer focused on .NET, full-stack
 development, and applied AI.
 
