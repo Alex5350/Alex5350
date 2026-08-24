@@ -14,23 +14,6 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 ## Selected work
 
-### [LeaveLite MCP](https://github.com/Alex5350/leavelite-mcp)
-
-<a href="https://github.com/Alex5350/leavelite-mcp">
-  <img src="https://raw.githubusercontent.com/Alex5350/leavelite-mcp/main/docs/diagrams/architecture-flow.svg" alt="LeaveLite MCP architecture showing how a tool call moves from an MCP client through the application and domain" width="100%">
-</a>
-
-A .NET 10 Model Context Protocol server for leave and PTO management, built with the official
-C# SDK and Clean Architecture. It exposes accrual balances, leave requests, approvals, team
-coverage, policy resources, and a review prompt to AI clients while keeping authorization and
-business rules in the domain rather than the model.
-
-**Engineering focus:** The 253-test suite includes 27 protocol-level integration tests using
-the official MCP client against the real transport. Stable domain error codes, deterministic
-time handling, and staffing constraints make tool behavior predictable for AI clients.
-
----
-
 ### [AssetLite](https://github.com/Alex5350/assetlite)
 
 <a href="https://github.com/Alex5350/assetlite">
@@ -46,6 +29,23 @@ signals-first SPA.
 responses into the UI, while Aspire orchestrates the API, SPA, telemetry, and health checks.
 The suite includes 339 backend and 62 Angular tests covering domain rules, API contracts,
 exports, and frontend behavior.
+
+---
+
+### [LeaveLite MCP](https://github.com/Alex5350/leavelite-mcp)
+
+<a href="https://github.com/Alex5350/leavelite-mcp">
+  <img src="https://raw.githubusercontent.com/Alex5350/leavelite-mcp/main/docs/diagrams/architecture-flow.svg" alt="LeaveLite MCP architecture showing how a tool call moves from an MCP client through the application and domain" width="100%">
+</a>
+
+A .NET 10 Model Context Protocol server for leave and PTO management, built with the official
+C# SDK and Clean Architecture. It exposes accrual balances, leave requests, approvals, team
+coverage, policy resources, and a review prompt to AI clients while keeping authorization and
+business rules in the domain rather than the model.
+
+**Engineering focus:** The 253-test suite includes 27 protocol-level integration tests using
+the official MCP client against the real transport. Stable domain error codes, deterministic
+time handling, and staffing constraints make tool behavior predictable for AI clients.
 
 ---
 
