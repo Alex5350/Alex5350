@@ -71,6 +71,25 @@ time handling, and staffing constraints make tool behavior predictable for AI cl
 
 ---
 
+### [VA OIG FWA Risk Triage & Reporting Portal](https://github.com/Alex5350/USWDS-VA-Demo)
+
+<a href="https://github.com/Alex5350/USWDS-VA-Demo">
+  <img src="https://raw.githubusercontent.com/Alex5350/USWDS-VA-Demo/main/docs/diagrams/request-flow.svg" alt="VA OIG FWA Risk Triage and Reporting Portal architecture showing the USWDS client, ASP.NET Core API, SQL Server reporting, offline fallback, and read-only AI assistant" width="100%">
+</a>
+
+A synthetic-data public-sector portal for prioritizing claims, providers, complaints, and
+case work for human review without treating risk indicators as fraud determinations. It
+combines a .NET 10 ASP.NET Core API, SQL Server reporting with EF Core and Dapper, a Section
+508/USWDS Next.js interface, and a Gemini case assistant limited to read-only, allowlisted
+tools.
+
+**Engineering focus:** Transparent scoring, role-aware workflows, audit events, accessible
+reporting, and offline fallback keep the system explainable when services are unavailable.
+The AI boundary can summarize synthetic case data but cannot mutate records, execute
+arbitrary SQL, or replace analyst judgment.
+
+---
+
 ### [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web)
 
 <a href="https://github.com/Alex5350/ledgerlite-web">
@@ -99,19 +118,6 @@ Architecture, and CQRS without a mediator framework.
 **What I learned:** architecture earns its keep when it makes business rules easy to locate,
 explain, and test. The 262-test suite focuses on those rules and the HTTP/authentication
 boundary rather than chasing coverage for its own sake.
-
----
-
-### [VA OIG FWA Risk Triage Demo](https://github.com/Alex5350/USWDS-VA-Demo)
-
-A synthetic-data public-sector demo that combines a .NET API, SQL reporting, a
-USWDS-oriented React/Next.js interface, and an AI-assisted case workflow. The application
-keeps risk scoring explainable and gives the assistant read-only, tool-backed access to case
-insights rather than treating generated text as authority.
-
-**What I learned:** accessibility, auditability, and explicit system boundaries are product
-features. Applied AI is more useful when it is grounded in the workflow, constrained by the
-application, and designed with failure paths in mind.
 
 ## Ideas I keep returning to
 
