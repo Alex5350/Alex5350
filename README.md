@@ -1,7 +1,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/header-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/header-light.svg">
-  <img alt="Alex Torres - Senior Software Engineer working across .NET, full-stack systems, and applied AI" src="./assets/header-light.svg" width="100%">
+  <img alt="Alex Torres, Senior Software Engineer working across .NET, full-stack systems, and applied AI" src="./assets/header-light.svg" width="100%">
 </picture>
 
 <br>
@@ -18,6 +18,31 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 ## Selected work
 
+### [MediFlow](https://github.com/Alex5350/mediflow)
+
+<a href="https://github.com/Alex5350/mediflow">
+  <img src="https://raw.githubusercontent.com/Alex5350/mediflow/main/docs/diagrams/hero.svg" alt="MediFlow banner: a Medicare enrollment and claims adjudication platform with a Blazor operations console, two ASP.NET Core APIs, an outbox-driven adjudication worker and a read-only MCP server over SQL Server" width="100%">
+</a>
+
+A Medicare enrollment and claims-adjudication platform: staff run AEP/ICEP/SEP eligibility
+in a Blazor wizard before anything is saved, providers submit claims that enter a durable
+outbox, and a worker leases them atomically through stored procedures, runs the rules
+engine (CO-29 timeliness, CO-27 coverage, CO-18 duplicates, fee allowance, deductible →
+coinsurance → OOP-max in integer cents) and commits the entire decision (every line,
+accumulators, audit trail) in one table-valued-parameter round trip. Built on .NET 10
+minimal APIs, EF Core with eight hand-tuned stored procedures, SQL Server, Serilog +
+OpenTelemetry, and a read-only MCP server exposing the same ops views to AI assistants.
+
+**Engineering focus:** Concurrency you can inspect: outbox leasing is an atomic CTE
+update under READPAST/UPDLOCK and the commit procedure guards on the lease, with
+integration tests proving two workers never claim the same claim and stale-lease commits
+are rejected. The four test tiers (65 unit, 15 Testcontainers integration, 10 bUnit,
+8 self-bootstrapping Playwright E2E) caught a real defect where DI-registered rules
+resolved an empty pipeline and every claim silently paid; the bug, fix and lesson are
+committed as ADR 0002. Warnings-as-errors includes NuGet vulnerability data, which
+already rejected a known-vulnerable transitive dependency during development; the
+pipeline adds CodeQL, Snyk, gitleaks and SPDX SBOM.
+
 ### [Mintmark](https://github.com/Alex5350/mintmark)
 
 <a href="https://github.com/Alex5350/mintmark">
@@ -27,12 +52,12 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 A precious-metals collection tracker where collectors catalog gold and silver holdings,
 photograph a coin's obverse and reverse for grounded AI identification with top-five
 candidates they confirm, and watch melt and rules-based collectible valuations against live
-spot prices - every number carrying its provenance. Built on ASP.NET Core minimal APIs with
+spot prices, every number carrying its provenance. Built on ASP.NET Core minimal APIs with
 .NET 10, EF Core and PostgreSQL 18 (pgvector + pg_trgm), S3-compatible image storage, Quartz
 jobs, a Next.js 16 web client, and an Expo SDK 57 mobile client whose guided two-shot capture
 is the reason the product exists on a phone.
 
-**Engineering focus:** Identification is retrieval-grounded - the vision contract demands
+**Engineering focus:** Identification is retrieval-grounded: the vision contract demands
 per-field confidence and visual evidence (null beats guessing), hybrid search proposes
 candidates, and the user's confirmation lands in an append-only audit run. Catalog
 specifications carry source URLs or stay null rather than invented; a labeled deterministic
@@ -52,7 +77,7 @@ coins diverge from transparent premium factors alone.
 A full-stack **Agentic RAG** platform that turns Word, Excel, PDF, image, and text uploads
 into verifiable answers with citations back to the source page. Rather than simply chunking
 and embedding raw content, its agentic ingestion pipeline generates summaries, keywords,
-likely questions, table context, and image captions before indexing-bridging the vocabulary
+likely questions, table context, and image captions before indexing, bridging the vocabulary
 gap between how documents are written and how people ask questions. Personal, agency, and
 admin scopes keep access deliberate, while SME approval gates what becomes shared knowledge.
 
@@ -60,7 +85,7 @@ admin scopes keep access deliberate, while SME approval gates what becomes share
 multimodal embeddings and OpenAI’s text embeddings in one pgvector store. Query-time
 retrieval remains a single indexed vector search, while FastAPI and ASP.NET Core
 implementations share the same API contract, authentication sessions, and deterministic
-offline embedding algorithm-allowing ingestion, approvals, retrieval, citations, and chat
+offline embedding algorithm, allowing ingestion, approvals, retrieval, citations, and chat
 to run without API keys and be parity-tested across runtimes.
 
 ---
@@ -193,7 +218,7 @@ boundary rather than chasing coverage for its own sake.
 - Put important business rules where another engineer can find and defend them.
 - Treat loading, empty, error, authorization, and recovery states as part of the feature.
 - Prefer explicit dependencies and observable failure modes over framework magic.
-- Use tests to protect decisions and invariants-not merely to increase a percentage.
+- Use tests to protect decisions and invariants, not merely to increase a percentage.
 - Add AI where it reduces friction without obscuring sources, permissions, or responsibility.
 
 ## Working with
