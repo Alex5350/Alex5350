@@ -6,105 +6,164 @@
 
 <br>
 
-I’m Alex, a U.S. Marine Corps veteran and software engineer focused on .NET, full-stack
+I'm Alex, a U.S. Marine Corps veteran and software engineer focused on .NET, full-stack
 development, and applied AI.
 
-Most of my professional work isn’t public, so the projects here are independent examples
-based on the kinds of systems and engineering problems I’ve worked on throughout my career.
-They don’t contain client code, data, or identifying details, but they do reflect how I
+Most of my professional work isn't public, so the projects here are independent examples
+based on the kinds of systems and engineering problems I've worked on throughout my career.
+They don't contain client code, data, or identifying details, but they do reflect how I
 approach architecture, accessibility, edge cases, AI integration, testing, and documentation.
 
 **Résumé:** [View PDF](https://github.com/Alex5350/Alex5350/blob/main/assets/Alexander-Torres-Resume.pdf) · [Download a copy](https://github.com/Alex5350/Alex5350/raw/main/assets/Alexander-Torres-Resume.pdf)
 
+> **Reading this page.** Every project below leads with what it does for its users: the
+> problem, the pictures, and one business highlight. Not an engineer? Skim the screenshots
+> and the bold lines; that's the whole story. Engineer? Open the **Engineering view** in any
+> entry, or jump straight to each repository's `TECHNICAL.md`, where the architecture, the
+> decision records, and the reasoning that maps every technical choice back to the business
+> problem all live.
+
 ## Selected work
+
+| Project | What it is | Stack highlights |
+|---|---|---|
+| [MediFlow](https://github.com/Alex5350/mediflow) | Medicare enrollment and claims done right: nothing half-paid, nothing lost | .NET 10, SQL Server, Blazor, MCP |
+| [Mintmark](https://github.com/Alex5350/mintmark) | A serious collector's tracker for gold and silver, where every number carries its provenance | .NET 10, PostgreSQL + pgvector, Next.js, Expo |
+| [DocSage](https://github.com/Alex5350/docsage) | Documents that answer questions, with citations and a review chain of command | FastAPI + ASP.NET Core parity, pgvector, Next.js |
+| [FlowInk](https://github.com/Alex5350/flowink) | Architecture diagrams that actually animate in GitHub READMEs, from plain JSON | TypeScript + C#, npm and NuGet packages |
+| [VideoScheduler](https://github.com/Alex5350/videoscheduler) | Video-gear booking that cannot double-book, across US time zones | Next.js, PostgreSQL, Drizzle |
+| [AssetLite](https://github.com/Alex5350/assetlite) | One live equipment register from headquarters down to every site | .NET 10, Aspire, Angular |
+| [LeaveLite MCP](https://github.com/Alex5350/leavelite-mcp) | Let your AI assistant answer leave questions; keep the rules on the server | .NET 10, official MCP SDK |
+| [VA OIG FWA Portal](https://github.com/Alex5350/USWDS-VA-Demo) | Prioritizes case review for analysts, without accusing anyone | .NET 10, SQL Server, USWDS, Section 508 |
+| [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web) | Double-entry bookkeeping with balance visible as you type | Blazor Interactive Auto, Tailwind |
+| [LedgerLite API](https://github.com/Alex5350/ledgerlite) | The books must balance: errors have nowhere to hide | .NET 10, EF Core, CQRS |
+
+---
 
 ### [MediFlow](https://github.com/Alex5350/mediflow)
 
 <a href="https://github.com/Alex5350/mediflow">
-  <img src="https://raw.githubusercontent.com/Alex5350/mediflow/main/docs/diagrams/hero.svg" alt="MediFlow banner: a Medicare enrollment and claims adjudication platform with a Blazor operations console, two ASP.NET Core APIs, an outbox-driven adjudication worker and a read-only MCP server over SQL Server" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/mediflow/main/docs/screenshots/dashboard.png" alt="MediFlow operations dashboard showing the enrollment and claims pipeline at a glance" width="100%">
 </a>
 
-A Medicare enrollment and claims-adjudication platform: staff run AEP/ICEP/SEP eligibility
-in a Blazor wizard before anything is saved, providers submit claims that enter a durable
-outbox, and a worker leases them atomically through stored procedures, runs the rules
-engine (CO-29 timeliness, CO-27 coverage, CO-18 duplicates, fee allowance, deductible →
-coinsurance → OOP-max in integer cents) and commits the entire decision (every line,
-accumulators, audit trail) in one table-valued-parameter round trip. Built on .NET 10
-minimal APIs, EF Core with eight hand-tuned stored procedures, SQL Server, Serilog +
-OpenTelemetry, and a read-only MCP server exposing the same ops views to AI assistants.
+Medicare operations teams juggle enrollment windows, claim rules, and payment accuracy across
+staff, members, and providers. MediFlow checks enrollment eligibility before anything is
+saved, runs submitted claims through the real rules (timeliness, coverage, duplicates,
+deductibles), and prices each one completely or not at all. Staff get an operations console;
+AI assistants get a read-only view of the same facts.
 
-**Engineering focus:** Concurrency you can inspect: outbox leasing is an atomic CTE
-update under READPAST/UPDLOCK and the commit procedure guards on the lease, with
-integration tests proving two workers never claim the same claim and stale-lease commits
-are rejected. The four test tiers (65 unit, 15 Testcontainers integration, 10 bUnit,
-8 self-bootstrapping Playwright E2E) caught a real defect where DI-registered rules
-resolved an empty pipeline and every claim silently paid; the bug, fix and lesson are
-committed as ADR 0002. Warnings-as-errors includes NuGet vulnerability data, which
-already rejected a known-vulnerable transitive dependency during development; the
-pipeline adds CodeQL, Snyk, gitleaks and SPDX SBOM.
+**Business highlight:** a claim is priced and committed in one atomic step, so nothing is
+ever half-paid, double-paid, or silently lost.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Concurrency you can inspect: claims move through a durable outbox whose leasing is an atomic
+CTE update under READPAST/UPDLOCK, and the commit procedure guards on the lease, with
+integration tests proving two workers never claim the same claim and stale-lease commits are
+rejected. The four test tiers (65 unit, 15 Testcontainers integration, 10 bUnit, 8
+self-bootstrapping Playwright E2E) caught a real defect where DI-registered rules resolved an
+empty pipeline and every claim silently paid; the bug, fix and lesson are committed as ADR
+0002. Warnings-as-errors includes NuGet vulnerability data; the pipeline adds CodeQL, Snyk,
+gitleaks and SPDX SBOM.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/mediflow/blob/main/TECHNICAL.md)
+
+</details>
+
+---
 
 ### [Mintmark](https://github.com/Alex5350/mintmark)
 
 <a href="https://github.com/Alex5350/mintmark">
-  <img src="https://raw.githubusercontent.com/Alex5350/mintmark/main/docs/assets/architecture.svg" alt="Mintmark architecture showing the Next.js web and Expo mobile clients over one ASP.NET Core API, PostgreSQL 18 with pgvector, S3-compatible storage, spot providers with failover, and the vision identification pipeline" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/mintmark/main/docs/assets/dashboard.png" alt="Mintmark dashboard showing a precious metals collection valued against live spot prices" width="100%">
 </a>
 
-A precious-metals collection tracker where collectors catalog gold and silver holdings,
-photograph a coin's obverse and reverse for grounded AI identification with top-five
-candidates they confirm, and watch melt and rules-based collectible valuations against live
-spot prices, every number carrying its provenance. Built on ASP.NET Core minimal APIs with
-.NET 10, EF Core and PostgreSQL 18 (pgvector + pg_trgm), S3-compatible image storage, Quartz
-jobs, a Next.js 16 web client, and an Expo SDK 57 mobile client whose guided two-shot capture
-is the reason the product exists on a phone.
+Serious collectors track gold and silver across scattered sources, and stale prices or
+guessed valuations make insurance records and sale decisions unreliable. Mintmark catalogs
+holdings, identifies coins from photos (offering grounded candidates the collector confirms,
+never auto-accepted), and values the collection against live, source-attributed spot prices,
+on the web and on a phone.
 
-**Engineering focus:** Identification is retrieval-grounded: the vision contract demands
-per-field confidence and visual evidence (null beats guessing), hybrid search proposes
-candidates, and the user's confirmation lands in an append-only audit run. Catalog
-specifications carry source URLs or stay null rather than invented; a labeled deterministic
-offline evaluator exercises the entire pipeline without API keys; and the committed OpenAPI
-document is a CI-diff-gated artifact that generates the TypeScript client both frontends
-consume. The 118-test backend includes golden valuations proving low-mintage and common-date
-coins diverge from transparent premium factors alone.
+**Business highlight:** every number carries its provenance: the dashboard's gain traces to
+the same live price the ticker shows, and an identification without catalog evidence says so.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Identification is retrieval-grounded: the vision contract demands per-field confidence and
+visual evidence (null beats guessing), hybrid search proposes candidates, and the user's
+confirmation lands in an append-only audit run. Catalog specifications carry source URLs or
+stay null rather than invented; a labeled deterministic offline evaluator exercises the
+entire pipeline without API keys; and the committed OpenAPI document is a CI-diff-gated
+artifact that generates the TypeScript client both frontends consume. The 118-test backend
+includes golden valuations proving low-mintage and common-date coins diverge from transparent
+premium factors alone.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/mintmark/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
 ### [DocSage](https://github.com/Alex5350/docsage)
 
 <a href="https://github.com/Alex5350/docsage">
-  <img src="https://raw.githubusercontent.com/Alex5350/docsage/main/docs/assets/architecture.svg" alt="DocSage architecture showing the Next.js interface, FastAPI and ASP.NET Core parity APIs, PostgreSQL with pgvector, and Gemini and OpenAI providers" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/docsage/main/docs/assets/screenshots/03-chat-answer-dark.png" alt="DocSage answering a policy question with citations back to the source document" width="100%">
 </a>
 
-A full-stack **Agentic RAG** platform that turns Word, Excel, PDF, image, and text uploads
-into verifiable answers with citations back to the source page. Rather than simply chunking
-and embedding raw content, its agentic ingestion pipeline generates summaries, keywords,
-likely questions, table context, and image captions before indexing, bridging the vocabulary
-gap between how documents are written and how people ask questions. Personal, agency, and
-admin scopes keep access deliberate, while SME approval gates what becomes shared knowledge.
+Agencies and enterprises sit on policy documents nobody can query, and people ask questions
+in different words than the documents use. DocSage ingests Word, Excel, PDF, image and text
+files, enriches them once so they match how people actually ask, and answers questions with
+citations back to the source page. What becomes shared knowledge is decided by a review chain
+of command, not by an upload.
 
-**Engineering focus:** Provider-qualified vector spaces safely support Gemini’s native
-multimodal embeddings and OpenAI’s text embeddings in one pgvector store. Query-time
-retrieval remains a single indexed vector search, while FastAPI and ASP.NET Core
-implementations share the same API contract, authentication sessions, and deterministic
-offline embedding algorithm, allowing ingestion, approvals, retrieval, citations, and chat
-to run without API keys and be parity-tested across runtimes.
+**Business highlight:** nothing becomes agency-wide until a subject-matter expert approves
+it (and uploaders can't approve their own), and every answer cites the page it came from.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Agentic ingestion pays model cost once per document instead of per question. Provider-
+qualified vector spaces support Gemini's native multimodal embeddings and OpenAI's text
+embeddings in one pgvector store without silent degradation. FastAPI and ASP.NET Core
+implementations share one API contract, one authentication model, and a deterministic offline
+embedding algorithm, so the entire product (ingestion, approvals, retrieval, citations, chat)
+runs without API keys and is parity-tested across runtimes by one E2E suite.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/docsage/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
 ### [FlowInk](https://github.com/Alex5350/flowink)
 
 <a href="https://github.com/Alex5350/flowink">
-  <img src="https://raw.githubusercontent.com/Alex5350/flowink/main/docs/diagrams/architecture.svg" alt="FlowInk architecture showing how a JSON specification passes through the CLI and renderer into a committed animated README diagram" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/flowink/main/docs/gallery/ci-pipeline.svg" alt="FlowInk gallery example: an animated CI pipeline diagram with gates, failure paths and a riding packet" width="100%">
 </a>
 
-A cross-framework library and CLI that turns JSON specifications into self-contained,
-animated SVG architecture diagrams. Its TypeScript and C# renderers are held to byte parity,
-with integrations for React, Angular, and Blazor plus a CLI for generating diagrams that can
-be committed directly to READMEs.
+Engineering documentation goes stale and unread, and hand-animated diagrams break the moment
+they meet GitHub's rendering rules. FlowInk turns a plain JSON description of nodes and edges
+into self-contained animated SVG diagrams that render reliably inside READMEs, respect
+reduced-motion preferences, and can be regenerated whenever the architecture changes.
 
-**Engineering focus:** CSS-only animation makes SMIL structurally impossible, keeping
-diagrams reliable inside GitHub’s `<img>` rendering context. Output contains no scripts or
-external references, escapes injected content, supports reduced-motion preferences, and is
-produced by zero-dependency rendering cores.
+**Business highlight:** architecture diagrams that actually animate where engineers read
+them, from data anyone on the team can edit.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+CSS-only animation makes SMIL structurally impossible, keeping diagrams reliable inside
+GitHub's `<img>` rendering context. Output contains no scripts or external references,
+escapes injected content, and is produced by zero-dependency rendering cores in TypeScript
+and C# that are held to byte parity by a golden-fixture test, so the npm and NuGet worlds
+cannot drift. Integrations ship for React, Angular, and Blazor, plus the CLI that renders
+this very diagram.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/flowink/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
@@ -118,100 +177,172 @@ produced by zero-dependency rendering cores.
   </picture>
 </a>
 
-A full-stack video-equipment scheduling system built with Next.js 16, PostgreSQL, Drizzle
-ORM, Tailwind CSS v4, and shadcn/ui. It coordinates studios, portable kits, and rover
-stations across regional offices with conflict-free one-off and recurring reservations,
-DST-correct time handling, Microsoft Teams integration, and calendar exports.
+Video teams spread across a headquarters and regional offices share studios, kits, and rover
+stations, and spreadsheet scheduling double-books rooms or lands bookings an hour off.
+VideoScheduler gives every office its own local calendar over one shared equipment pool and
+makes both failures impossible by design.
 
-**Engineering focus:** Pure domain rules handle conflicts, recurrence, and time zones, while
-PostgreSQL row locks close last-slot race conditions. Authentication and Teams use swappable
-boundaries for Entra ID and Microsoft Graph. Validation includes 35 domain tests and 20
-real-HTTP integration suites.
+**Business highlight:** reservations that cannot conflict, correct across four US time zones
+and both clock-change days.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Pure domain rules handle conflicts, recurrence, and time zones, while PostgreSQL row locks
+close last-slot race conditions. Time conversion lives in one `Intl`-based module used by
+every screen and rule, pinned by DST transition-day test vectors. Authentication and Teams
+sit behind swappable boundaries for Entra ID and Microsoft Graph. Validation includes 35
+domain tests and 20 real-HTTP integration suites.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/videoscheduler/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
 ### [AssetLite](https://github.com/Alex5350/assetlite)
 
 <a href="https://github.com/Alex5350/assetlite">
-  <img src="https://raw.githubusercontent.com/Alex5350/assetlite/main/docs/diagrams/app-flow.svg" alt="AssetLite architecture showing Aspire orchestration across the Angular application, ASP.NET Core API, Clean Architecture layers, SQLite, and telemetry" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/assetlite/main/docs/screenshots/shot-dashboard.png" alt="AssetLite dashboard showing the equipment register and asset lifecycle at a glance" width="100%">
 </a>
 
-A full-stack IT asset and inventory management system built with .NET 10, Angular 21,
-Tailwind CSS v4, and .NET Aspire. It handles asset lifecycle states, hierarchical offices,
-barcode and QR labels, search, and Excel/PDF exports through a Clean Architecture API and
-signals-first SPA.
+Growing companies lose track of who holds which laptop, monitor, or tablet, and audits turn
+into spreadsheet archaeology. AssetLite keeps one live equipment register across an office
+hierarchy from headquarters to regions to sites, follows gear through its whole lifecycle
+with corrections recorded rather than erased, and prints scannable barcode and QR labels.
 
-**Engineering focus:** Typed domain errors flow from lifecycle rules through RFC 9457
-responses into the UI, while Aspire orchestrates the API, SPA, telemetry, and health checks.
-The suite includes 339 backend and 62 Angular tests covering domain rules, API contracts,
-exports, and frontend behavior.
+**Business highlight:** one registry from HQ to every site, with Excel and PDF exports an
+auditor can actually use.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Typed domain errors flow from lifecycle rules through RFC 9457 responses into the UI, while
+.NET Aspire orchestrates the API, Angular SPA, telemetry, and health checks so the whole
+system evaluates in one command. The suite includes 339 backend and 62 Angular tests covering
+domain rules, API contracts, exports, and frontend behavior.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/assetlite/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
 ### [LeaveLite MCP](https://github.com/Alex5350/leavelite-mcp)
 
 <a href="https://github.com/Alex5350/leavelite-mcp">
-  <img src="https://raw.githubusercontent.com/Alex5350/leavelite-mcp/main/docs/diagrams/architecture-flow.svg" alt="LeaveLite MCP architecture showing how a tool call moves from an MCP client through the application and domain" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/leavelite-mcp/main/docs/diagrams/conversation.svg" alt="A manager chatting with an AI assistant that answers who is off next Friday and books leave through tool calls with approval routing" width="100%">
 </a>
 
-A .NET 10 Model Context Protocol server for leave and PTO management, built with the official
-C# SDK and Clean Architecture. It exposes accrual balances, leave requests, approvals, team
-coverage, policy resources, and a review prompt to AI clients while keeping authorization and
-business rules in the domain rather than the model.
+Leave balances and policies live in HR portals nobody checks, so managers plan staffing blind
+and booking leave means re-keying rules the system already knows. LeaveLite gives an AI
+assistant a safe way to answer leave questions and book time off, while the tenure gates,
+carry-over caps, holiday awareness, approvals, and minimum-staffing rules stay on the server
+where the model can't misremember them.
 
-**Engineering focus:** The 253-test suite includes 27 protocol-level integration tests using
-the official MCP client against the real transport. Stable domain error codes, deterministic
+**Business highlight:** "who's off next Friday?" becomes one question, and every booking
+still routes through real approval authority.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+A .NET 10 Model Context Protocol server built with the official C# SDK and Clean
+Architecture. The 253-test suite includes 27 protocol-level integration tests using the
+official MCP client against the real transport. Stable domain error codes, deterministic
 time handling, and staffing constraints make tool behavior predictable for AI clients.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/leavelite-mcp/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
 ### [VA OIG FWA Risk Triage & Reporting Portal](https://github.com/Alex5350/USWDS-VA-Demo)
 
 <a href="https://github.com/Alex5350/USWDS-VA-Demo">
-  <img src="https://raw.githubusercontent.com/Alex5350/USWDS-VA-Demo/main/docs/diagrams/request-flow.svg" alt="VA OIG FWA Risk Triage and Reporting Portal architecture showing the USWDS client, ASP.NET Core API, SQL Server reporting, offline fallback, and read-only AI assistant" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/USWDS-VA-Demo/main/docs/screenshots/shot-dashboard.png" alt="The VA OIG portal dashboard showing risk triage queues and reporting for analyst review" width="100%">
 </a>
 
-A synthetic-data public-sector portal for prioritizing claims, providers, complaints, and
-case work for human review without treating risk indicators as fraud determinations. It
-combines a .NET 10 ASP.NET Core API, SQL Server reporting with EF Core and Dapper, a Section
-508/USWDS Next.js interface, and a Gemini case assistant limited to read-only, allowlisted
-tools.
+OIG analysts face far more Community Care claims, providers, and complaints than they can
+review equally, and the risk cuts both ways: missed improper payments on one side, unfair
+accusation on the other. This synthetic-data portal surfaces review candidates through
+transparent business rules and SQL-backed reporting, accessible by law and by design.
 
-**Engineering focus:** Transparent scoring, role-aware workflows, audit events, accessible
-reporting, and offline fallback keep the system explainable when services are unavailable.
-The AI boundary can summarize synthetic case data but cannot mutate records, execute
-arbitrary SQL, or replace analyst judgment.
+**Business highlight:** it prioritizes human review without ever treating a risk indicator
+as a fraud determination.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+A .NET 10 ASP.NET Core API over SQL Server reporting with EF Core and Dapper, a Section
+508/USWDS Next.js interface, and an offline fallback so the demo works anywhere. The AI
+boundary can summarize case data but cannot mutate records, execute arbitrary SQL, or replace
+analyst judgment: the blast radius of a bad generation is a wrong summary that still cites
+its case data.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/USWDS-VA-Demo/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
 ### [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web)
 
 <a href="https://github.com/Alex5350/ledgerlite-web">
-  <img src="https://raw.githubusercontent.com/Alex5350/ledgerlite-web/main/docs/diagrams/request-flow.svg" alt="LedgerLite Web architecture showing Interactive Auto across server and WebAssembly rendering, JWT authentication, the API, domain layer, and persistence" width="100%">
+  <img src="https://raw.githubusercontent.com/Alex5350/ledgerlite-web/main/docs/screenshots/shot-overview.png" alt="LedgerLite Web overview showing period totals, balance status, and budgets at risk" width="100%">
 </a>
 
-A full-stack .NET 10 reference application built around a double-entry ledger. I used it to
-work through Blazor’s Interactive Auto render mode, authentication across server and
-WebAssembly boundaries, a hand-built Tailwind component system, and the less-visible states
-that make an interface trustworthy. The combined backend and UI suite currently contains
-381 tests.
+Bookkeeping interfaces usually make it easy to type something unbalanced and hard to notice.
+LedgerLite Web is the face of double-entry personal bookkeeping: the journal editor shows
+running debit and credit totals while you type, an entry that doesn't balance simply cannot
+be posted, and closed periods stay closed.
 
-**What I learned:** render modes change service-lifetime assumptions; design systems become
-useful when they encode behavior as well as appearance; and browser testing has a way of
-finding integration mistakes that unit tests cannot see.
+**Business highlight:** balance is visible as you type; the server re-checks everything, so
+the interface can't bypass the rules.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+A .NET 10 Blazor reference application built around Interactive Auto render modes,
+authentication across server and WebAssembly boundaries, per-circuit HTTP handler scoping,
+and a hand-built Tailwind component system. Render modes change service-lifetime assumptions;
+design systems become useful when they encode behavior as well as appearance; and browser
+testing finds integration mistakes unit tests cannot see. The combined backend and UI suite
+contains 381 tests.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/ledgerlite-web/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
 ### [LedgerLite API](https://github.com/Alex5350/ledgerlite)
 
-A personal-finance API where the domain has real invariants: journal entries must balance,
-closed fiscal periods are immutable, account numbers are unique within a period, and budget
-alerts fire once per threshold. It uses .NET 10, C# 14, ASP.NET Core, EF Core, Clean
-Architecture, and CQRS without a mediator framework.
+<a href="https://github.com/Alex5350/ledgerlite">
+  <img src="https://raw.githubusercontent.com/Alex5350/ledgerlite/main/docs/diagrams/double-entry.svg" alt="The life of one journal entry: a transaction becomes a debit and a credit, the balancing rule checks them, balanced entries post to the ledger, and the trial balance nets to zero" width="100%">
+</a>
 
-**What I learned:** architecture earns its keep when it makes business rules easy to locate,
-explain, and test. The 262-test suite focuses on those rules and the HTTP/authentication
-boundary rather than chasing coverage for its own sake.
+Money apps that track only one side of a movement drift silently from reality. This
+personal-finance API implements double-entry accounting, the centuries-old answer: every
+movement is recorded as both a debit and a credit that must agree, so a mistake breaks the
+balance instead of hiding in it.
+
+**Business highlight:** if it doesn't balance, it doesn't post; and closed fiscal periods
+stay immutable.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+The domain carries real invariants: journal entries must balance, closed fiscal periods are
+immutable, account numbers are unique within a period, and budget alerts fire once per
+threshold. .NET 10, C# 14, ASP.NET Core, EF Core, Clean Architecture, and CQRS without a
+mediator framework. Architecture earns its keep when it makes business rules easy to locate,
+explain, and test; the 262-test suite focuses on those rules and the HTTP boundary rather
+than chasing coverage for its own sake.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/ledgerlite/blob/main/TECHNICAL.md)
+
+</details>
 
 ## Ideas I keep returning to
 
@@ -223,10 +354,12 @@ boundary rather than chasing coverage for its own sake.
 
 ## Working with
 
-**Languages:** C#, TypeScript, SQL  
-**Application platforms:** .NET, ASP.NET Core, Blazor, React, Next.js  
-**Data and delivery:** EF Core, Dapper, SQL Server, SQLite, Docker, GitHub Actions  
-**Applied AI:** streaming interfaces, tool-backed assistants, and structured validation
+**Languages:** C#, TypeScript, SQL
+**Application platforms:** .NET, ASP.NET Core, Blazor, React, Next.js, Angular, Expo
+**Data and delivery:** EF Core, Dapper, SQL Server, PostgreSQL (pgvector), SQLite, Docker,
+.NET Aspire, GitHub Actions
+**Applied AI:** streaming interfaces, tool-backed assistants (MCP), retrieval-grounded
+generation, structured validation
 
 ## Elsewhere
 
