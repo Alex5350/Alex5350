@@ -27,6 +27,7 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 | Project | What it is | Stack highlights |
 |---|---|---|
+| [Palisade](https://github.com/Alex5350/palisade) | Installation security fused into one operating picture: incidents that fire immediately, responses the system drives | .NET 10, Redis Streams, SQL Server, Avalonia |
 | [Corridor](https://github.com/Alex5350/corridor) | An ADFS-to-Okta identity migration: three apps cross with no downtime | .NET 10, OIDC/SAML/SCIM/XACML, CoreWCF, React |
 | [MediFlow](https://github.com/Alex5350/mediflow) | Medicare enrollment and claims done right: nothing half-paid, nothing lost | .NET 10, SQL Server, Blazor, MCP |
 | [Mintmark](https://github.com/Alex5350/mintmark) | A serious collector's tracker for gold and silver, where every number carries its provenance | .NET 10, PostgreSQL + pgvector, Next.js, Expo |
@@ -38,6 +39,58 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 | [VA OIG FWA Portal](https://github.com/Alex5350/USWDS-VA-Demo) | Prioritizes case review for analysts, without accusing anyone | .NET 10, SQL Server, USWDS, Section 508 |
 | [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web) | Double-entry bookkeeping with balance visible as you type | Blazor Interactive Auto, Tailwind |
 | [LedgerLite API](https://github.com/Alex5350/ledgerlite) | The books must balance: errors have nowhere to hide | .NET 10, EF Core, CQRS |
+
+---
+
+### [Palisade](https://github.com/Alex5350/palisade)
+
+<a href="https://github.com/Alex5350/palisade">
+  <img src="https://raw.githubusercontent.com/Alex5350/palisade/main/docs/screenshots/shot-perimeter-breach.png" alt="Palisade operations dashboard: a dark tactical map of Camp Meridian with zones, gates, and sensors; a pulsing red ring marking a perimeter breach in a restricted zone; the incident panel showing the active breach with its response workflow running" width="100%">
+</a>
+
+A security force runs its installation on single-purpose systems: badge readers,
+cameras, and fence sensors, each with its own console, none of them talking. The
+guard watches three feeds and does the correlation in their head, which fails as
+noise (false pages until nobody responds) and as silence (the motion blip that
+mattered, missed next to the badge data that explained it). Palisade is the other
+path, demonstrated end to end on a synthetic installation: every sensor feed lands
+on one event bus, six correlation rules turn raw detections into de-duplicated
+incidents with severity and a map position, each incident runs a response checklist
+(notify, task a camera, lock a gate, wait for the operator's ack, escalate on
+timeout), and the whole picture plus every command lives on one screen with an
+append-only audit trail. A desktop console and a typed client SDK consume the same
+surfaces, and a scripted synthetic feed makes the system perform on demand.
+
+**Business highlight:** a qualifying detection in a restricted area raises the
+incident the instant it happens (a legitimate badge-in in the same zone auto-resolves
+it; the rule then re-arms), and resolving an incident actually ends it: workflows
+cancel, de-duplication re-arms, and nothing acts on a closed incident, a guarantee
+that is specified in the architecture contract, pinned by tests, and re-verifiable
+live from the runbook.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Four .NET 10 services over Redis Streams with consumer groups and per-event SET NX
+idempotency (the seen-key scope was the repo's hardest-won defect, caught and pinned
+by regression test), SQL Server persistence, and SSE fan-out the dashboard parses by
+hand over an authorized fetch. The correlation engine is a pure, deterministic state
+machine with boundary-pinned thresholds on all six rules, track join and age-out, and
+lazy liveness for the degradation rule; the response side is a workflow engine with
+definitions as data (notify, command, cameraTask, awaitAck), per-step timeouts,
+escalation that continues the checklist, and resolve-as-broadcast semantics across
+services. The web COP is a dependency-free canvas client; the desktop console is
+Avalonia written in the WPF idiom (axaml, MVVM, headless-tested view models, win-x64
+publish). CI proves it on every push: 281 unit tests, 14 Testcontainers integration
+tests, a 17-request newman regression against the booted stack, a console publish
+check, gitleaks and CodeQL; eight ADRs and a five-story process log (the stream
+swallowed by a dedup key, the incident that resurrected after resolve, the console
+crash on timestamp offsets, the docker context trap, the blank-map capture) document
+how each guarantee was earned.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/palisade/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
