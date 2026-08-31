@@ -27,6 +27,7 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 | Project | What it is | Stack highlights |
 |---|---|---|
+| [Corridor](https://github.com/Alex5350/corridor) | An ADFS-to-Okta identity migration: three apps cross with no downtime | .NET 10, OIDC/SAML/SCIM/XACML, CoreWCF, React |
 | [MediFlow](https://github.com/Alex5350/mediflow) | Medicare enrollment and claims done right: nothing half-paid, nothing lost | .NET 10, SQL Server, Blazor, MCP |
 | [Mintmark](https://github.com/Alex5350/mintmark) | A serious collector's tracker for gold and silver, where every number carries its provenance | .NET 10, PostgreSQL + pgvector, Next.js, Expo |
 | [DocSage](https://github.com/Alex5350/docsage) | Documents that answer questions, with citations and a review chain of command | FastAPI + ASP.NET Core parity, pgvector, Next.js |
@@ -37,6 +38,43 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 | [VA OIG FWA Portal](https://github.com/Alex5350/USWDS-VA-Demo) | Prioritizes case review for analysts, without accusing anyone | .NET 10, SQL Server, USWDS, Section 508 |
 | [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web) | Double-entry bookkeeping with balance visible as you type | Blazor Interactive Auto, Tailwind |
 | [LedgerLite API](https://github.com/Alex5350/ledgerlite) | The books must balance: errors have nowhere to hide | .NET 10, EF Core, CQRS |
+
+---
+
+### [Corridor](https://github.com/Alex5350/corridor)
+
+<a href="https://github.com/Alex5350/corridor">
+  <img src="https://raw.githubusercontent.com/Alex5350/corridor/main/docs/screenshots/shot-migration-dashboard.png" alt="Corridor migration dashboard mid-cutover: the three applications shown with one in each trust mode (ADFS, dual trust, Okta) and the audit trail of flips below" width="100%">
+</a>
+
+Government programs sit on applications tied to aging on-prem identity systems, and moving
+them to modern cloud authentication usually means downtime and risk. Corridor walks three
+synthetic federal applications (a permits web portal, a field-inspector SPA, and a SOAP case
+service) from an ADFS-style SAML login to Okta-style authentication with no downtime window:
+a per-app dual-trust cutover, SCIM provisioning so accounts move with the cutover, a
+centralized XACML authorization point, and a Postman, SoapUI, and JMeter regression gate run
+between every phase.
+
+**Business highlight:** every application crossed to the new identity provider with zero
+downtime, and rollback stayed one flip away the whole time.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Both identity providers are simulated locally with real protocols: actual OIDC code flow with
+mandatory PKCE and rotating refresh tokens, signed SAML 2.0 assertions, SCIM 2.0 provisioning,
+and an XACML decision point over committed policies. The legacy service keeps its SOAP
+contract (CoreWCF) and its raw ADO.NET data layer untouched while its identity header swaps
+from SAML to JWT behind a SQL-backed trust-mode state machine; the portal proves dual trust
+live by accepting either provider mid-cutover. 199 unit tests, 30 cross-service integration
+tests, and a self-bootstrapping Playwright suite drive all three login paths, the audited
+flips, and the case lifecycle; a VB.NET ops CLI covers the cutover weekend's pocket tooling.
+The integration suite caught six real cross-service defects on the way (SOAP header
+namespaces, DataContract member order, and friends), all written up in the process doc.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/corridor/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
