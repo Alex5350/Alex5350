@@ -62,15 +62,17 @@ downtime, and rollback stayed one flip away the whole time.
 <summary><b>Engineering view</b></summary>
 
 Both identity providers are simulated locally with real protocols: actual OIDC code flow with
-mandatory PKCE and rotating refresh tokens, signed SAML 2.0 assertions, SCIM 2.0 provisioning,
-and an XACML decision point over committed policies. The legacy service keeps its SOAP
+mandatory PKCE and rotating refresh tokens, signed SAML 2.0 assertions, SCIM 2.0 provisioning
+driven from the migration dashboard itself, and a centralized XACML decision point that the
+portal actually enforces, fail closed, at its API boundary. The legacy service keeps its SOAP
 contract (CoreWCF) and its raw ADO.NET data layer untouched while its identity header swaps
 from SAML to JWT behind a SQL-backed trust-mode state machine; the portal proves dual trust
-live by accepting either provider mid-cutover. 199 unit tests, 30 cross-service integration
-tests, and a self-bootstrapping Playwright suite drive all three login paths, the audited
-flips, and the case lifecycle; a VB.NET ops CLI covers the cutover weekend's pocket tooling.
-The integration suite caught six real cross-service defects on the way (SOAP header
-namespaces, DataContract member order, and friends), all written up in the process doc.
+live by accepting either provider mid-cutover. CI runs the whole proof on every push: 231
+unit tests, 31 cross-service integration tests, a self-bootstrapping Playwright suite over
+all three login paths and the audited flips, and the committed Postman collection (25
+requests) executed by newman against a live stack, with gitleaks and CodeQL alongside; a
+VB.NET ops CLI covers the cutover weekend's pocket tooling. The debugging stories behind the
+eight real defects the suites caught along the way are written up in the process doc.
 
 Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/corridor/blob/main/TECHNICAL.md)
 
