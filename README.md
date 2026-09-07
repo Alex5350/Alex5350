@@ -29,6 +29,7 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 |---|---|---|
 | [Palisade](https://github.com/Alex5350/palisade) | Installation security fused into one operating picture: incidents that fire immediately, responses the system drives | .NET 10, Redis Streams, SQL Server, Avalonia |
 | [Corridor](https://github.com/Alex5350/corridor) | An ADFS-to-Okta identity migration: three apps cross with no downtime | .NET 10, OIDC/SAML/SCIM/XACML, CoreWCF, React |
+| [Atelier](https://github.com/Alex5350/atelier) | A creative AI studio that runs with zero API keys: chat with files, review-gated image passes, video, and honest cost accounting | Next.js, Bun, AI SDK, PostgreSQL + pgvector |
 | [MediFlow](https://github.com/Alex5350/mediflow) | Medicare enrollment and claims done right: nothing half-paid, nothing lost | .NET 10, SQL Server, Blazor, MCP |
 | [Mintmark](https://github.com/Alex5350/mintmark) | A serious collector's tracker for gold and silver, where every number carries its provenance | .NET 10, PostgreSQL + pgvector, Next.js, Expo |
 | [DocSage](https://github.com/Alex5350/docsage) | Documents that answer questions, with citations and a review chain of command | FastAPI + ASP.NET Core parity, pgvector, Next.js |
@@ -128,6 +129,54 @@ VB.NET ops CLI covers the cutover weekend's pocket tooling. The debugging storie
 eight real defects the suites caught along the way are written up in the process doc.
 
 Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/corridor/blob/main/TECHNICAL.md)
+
+</details>
+
+---
+
+### [Atelier](https://github.com/Alex5350/atelier)
+
+<a href="https://github.com/Alex5350/atelier">
+  <img src="https://raw.githubusercontent.com/Alex5350/atelier/main/docs/screenshots/studio.png" alt="Atelier's studio project view: dark-themed pass cards with generated images and review controls, the prompt composer with model and reference pickers, and a lineage graph connecting approved assets to the passes that used them" width="100%">
+</a>
+
+Creative teams evaluating AI usually hit a demo wall: everything works with one
+hardcoded model and no cost visibility, or you spend a week wiring keys before
+you see anything. Atelier is a full creative studio, streaming chat with file
+attachments and retrieval, image generation with inpaint/outpaint/upscale
+passes, and video jobs, that runs end to end with zero API keys: three built-in
+demo models serve every surface with clearly labeled output, and the moment a
+real Anthropic, OpenAI, or Google key appears, the same surfaces switch to
+frontier models with per-turn prices read from a registry the operator edits.
+
+**Business highlight:** every model call is priced and gated before it happens:
+a daily budget cap refuses calls that would overshoot it (naming the numbers in
+the refusal), and every completed call writes a usage event that pins the price
+it actually ran at, so historical spend stays truthful even after prices change.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Zero-key operation is not a mock at the route layer: the demo models are
+hand-written implementations of the AI SDK's provider interfaces (streaming
+chat, image generation), so pricing, the registry, and the admin page exercise
+identical code paths for real and demo providers and cannot drift. Models live
+in PostgreSQL as rows with effective-dated, append-only prices; only assets an
+operator approves can feed later passes or exports, enforced three layers deep
+and ending in a database trigger; file chat runs hybrid retrieval (pgvector
+cosine fused with full-text search) with citations back to filename and chunk;
+regenerating an image supersedes rather than overwrites, and the lineage graph
+draws how every asset was made. Bun with Next.js App Router, Tailwind v4 with
+the shadcn base-nova kit, better-auth, Drizzle migrations, and a video
+provider port with demo, Sora, and Veo implementations. CI runs typecheck,
+lint, 61 unit tests, and a Playwright suite that builds and boots the
+production server before testing it. One caught defect worth retelling: the
+demo video renderer worked on macOS and failed on CI because the static linux
+ffmpeg build ships without the drawtext filter; the renderer now composes its
+title card with sharp and encodes with core filters only, verified on both
+platforms.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/atelier/blob/main/TECHNICAL.md)
 
 </details>
 
