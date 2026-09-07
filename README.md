@@ -168,13 +168,16 @@ cosine fused with full-text search) with citations back to filename and chunk;
 regenerating an image supersedes rather than overwrites, and the lineage graph
 draws how every asset was made. Bun with Next.js App Router, Tailwind v4 with
 the shadcn base-nova kit, better-auth, Drizzle migrations, and a video
-provider port with demo, Sora, and Veo implementations. CI runs typecheck,
-lint, 61 unit tests, and a Playwright suite that builds and boots the
-production server before testing it. One caught defect worth retelling: the
-demo video renderer worked on macOS and failed on CI because the static linux
-ffmpeg build ships without the drawtext filter; the renderer now composes its
-title card with sharp and encodes with core filters only, verified on both
-platforms.
+provider port with demo, Sora, and Veo implementations. The API boundary is
+hardened like it faces the internet: per-user rate limiting on every
+cost-bearing endpoint, security headers with a conservative CSP, typed 400s
+for malformed bodies, and bounded provider fetches. CI runs typecheck, lint,
+71 unit tests, a 14-spec Playwright suite that builds and boots the production
+server before testing it, gitleaks over the full history, and CodeQL. The
+suite has earned its keep: it caught attachment turns failing on the AI SDK's
+URL validation, a type guard that missed URL instances, a retrieval toggle
+stranded by a missing field, and a static-linux ffmpeg build that ships
+without drawtext; each is fixed and pinned by a regression test.
 
 Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/atelier/blob/main/TECHNICAL.md)
 
