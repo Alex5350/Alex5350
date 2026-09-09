@@ -6,8 +6,11 @@
 
 <br>
 
-I'm Alex, a U.S. Marine Corps veteran and software engineer focused on .NET, full-stack
-development, and applied AI.
+I'm Alex, a U.S. Marine Corps veteran and senior software engineer specializing in .NET,
+full-stack development, and applied AI. I build reliable, accessible web applications with
+Angular, React.js, Next.js, and Blazor, bringing together clean architecture, intuitive user
+experiences, and practical AI integration. My focus is turning complex requirements into
+maintainable software that solves real business problems.
 
 Most of my professional work isn't public, so the projects here are independent examples
 based on the kinds of systems and engineering problems I've worked on throughout my career.
