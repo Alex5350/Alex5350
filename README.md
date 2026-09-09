@@ -30,6 +30,7 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 | [Palisade](https://github.com/Alex5350/palisade) | Installation security fused into one operating picture: incidents that fire immediately, responses the system drives | .NET 10, Redis Streams, SQL Server, Avalonia |
 | [Corridor](https://github.com/Alex5350/corridor) | An ADFS-to-Okta identity migration: three apps cross with no downtime | .NET 10, OIDC/SAML/SCIM/XACML, CoreWCF, React |
 | [Atelier](https://github.com/Alex5350/atelier) | A creative AI studio that runs with zero API keys: chat with files, review-gated image passes, video, and honest cost accounting | Next.js, Bun, AI SDK, PostgreSQL + pgvector |
+| [Pacific Marines](https://github.com/Alex5350/tabs-pacific-marines) | A WWII Marine faction for Totally Accurate Battle Simulator, injected into the live game from C#: airstrikes, mortar crews, and cover troops actually build | C#, .NET Framework 4.7.2, BepInEx, Harmony, Unity |
 | [MediFlow](https://github.com/Alex5350/mediflow) | Medicare enrollment and claims done right: nothing half-paid, nothing lost | .NET 10, SQL Server, Blazor, MCP |
 | [Mintmark](https://github.com/Alex5350/mintmark) | A serious collector's tracker for gold and silver, where every number carries its provenance | .NET 10, PostgreSQL + pgvector, Next.js, Expo |
 | [DocSage](https://github.com/Alex5350/docsage) | Documents that answer questions, with citations and a review chain of command | FastAPI + ASP.NET Core parity, pgvector, Next.js |
@@ -180,6 +181,52 @@ stranded by a missing field, and a static-linux ffmpeg build that ships
 without drawtext; each is fixed and pinned by a regression test.
 
 Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/atelier/blob/main/TECHNICAL.md)
+
+</details>
+
+---
+
+### [Pacific Marines](https://github.com/Alex5350/tabs-pacific-marines)
+
+<a href="https://github.com/Alex5350/tabs-pacific-marines">
+  <img src="https://raw.githubusercontent.com/Alex5350/tabs-pacific-marines/main/docs/screenshots/hero-banner.png" alt="Pacific Marines hero: a C# mod adding a WWII Marine faction to Totally Accurate Battle Simulator, with five units, airstrikes, a mortar team, and buildable sandbag cover beside a live in-game capture" width="100%">
+</a>
+
+As a Marine veteran I wanted to field a WWII Marine faction in Totally Accurate
+Battle Simulator, and the game's Unit Creator cannot make one: no creator option
+calls an airstrike, mans a mortar with a real three-person crew, or builds
+physical cover in the middle of a battle. Pacific Marines adds all five units as
+a C# plugin: it registers the faction into the running game's content database,
+patches four AI entry points so the mortar crew holds its emplacement, and runs
+the support abilities as battle-scoped effects that clean up on reset. No game
+file changes, and vanilla stays one normal Steam launch away.
+
+**Business highlight:** every claim is verified in the real game, not against
+mocks: a separate test plugin places units through the game's own APIs, starts
+battles through the real UI, sends actual G-key events to the game process, and
+retains the PASS/FAIL transcripts, covering damage, cooldowns, sandbag cover
+that stops real bullets, death semantics, and reset cleanup.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+A BepInEx 5 plugin targeting .NET Framework 4.7.2 with C# 7.3 pinned to match
+the game's Mono runtime, developed and live-tested on Apple Silicon through
+Rosetta. Content registration extends exactly two in-memory tables under a
+namespaced ID range with a collision guard that refuses to overwrite; blueprints
+are cloned, never aliased, and tests assert the stock blueprint is untouched.
+Unit behavior comes from Harmony prefixes on the game's movement and attack
+entry points (the naive speed-multiplier approach failed live testing; the
+failing transcript is retained alongside the fix). Effects own their lifetime
+under a battle-scoped root: simulation-time timers that respect pause and slow
+motion, occlusion-aware blasts (roughly 80 percent damage reduction behind
+sandbags, measured), a 32-shelter cap, and full cleanup on reset and scene
+unload. The harness compiles a Swift key-sender so native keyboard events
+exercise the production input route, and pairs every blocked measurement with an
+open-lane control. Nine defects were reproduced, fixed, and pinned by regression
+evidence; CI runs hygiene, documentation-link, diagram-spec, and secret scans.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/tabs-pacific-marines/blob/main/TECHNICAL.md)
 
 </details>
 
@@ -500,7 +547,8 @@ Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/ledgerlite/blob/main/
 ## Working with
 
 **Languages:** C#, TypeScript, SQL
-**Application platforms:** .NET, ASP.NET Core, Blazor, React, Next.js, Angular, Expo
+**Application platforms:** .NET, ASP.NET Core, Blazor, React, Next.js, Angular, Expo,
+Unity game modding (BepInEx)
 **Data and delivery:** EF Core, Dapper, SQL Server, PostgreSQL (pgvector), SQLite, Docker,
 .NET Aspire, GitHub Actions
 **Applied AI:** streaming interfaces, tool-backed assistants (MCP), retrieval-grounded
