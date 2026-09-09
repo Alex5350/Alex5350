@@ -16,6 +16,19 @@ approach architecture, accessibility, edge cases, AI integration, testing, and d
 
 **Résumé:** [View PDF](https://github.com/Alex5350/Alex5350/blob/main/assets/Alexander-Torres-Resume.pdf) · [Download a copy](https://github.com/Alex5350/Alex5350/raw/main/assets/Alexander-Torres-Resume.pdf)
 
+## Certifications
+
+The credentials behind the work. Every entry links to its verification page at the issuer:
+
+| Certification | Issuer | Year |
+| --- | --- | ---: |
+| [Azure AI Cloud Developer Associate](https://learn.microsoft.com/en-us/users/alextorres/credentials/c0bff2873ba23cda) | Microsoft | 2026 |
+| [Azure AI Apps and Agents Developer Associate](https://learn.microsoft.com/en-us/users/alextorres/credentials/5041608fbe16de66) | Microsoft | 2026 |
+| [Claude Certified Architect - Foundations](https://www.credly.com/badges/7d9934b2-72ac-46f6-8566-3183fa815f68) (proctored) | Anthropic | 2026 |
+| [AWS Certified Developer - Associate](https://www.credly.com/badges/8df8ecc7-f87f-48d3-917e-878088dc6e36/public_url) | Amazon Web Services | |
+| [Accelerate app development by using GitHub Copilot](https://learn.microsoft.com/en-us/users/alextorres/credentials/1f0e41c2afd67c4b) | Microsoft Applied Skills | |
+| [Build a natural language processing solution with Azure AI Language](https://learn.microsoft.com/en-us/users/alextorres/credentials/7f6727487852b46a) | Microsoft Applied Skills | |
+
 > **Reading this page.** Every project below leads with what it does for its users: the
 > problem, the pictures, and one business highlight. Not an engineer? Skim the screenshots
 > and the bold lines; that's the whole story. Engineer? Open the **Engineering view** in any
