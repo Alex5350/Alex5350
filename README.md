@@ -43,6 +43,7 @@ The credentials behind the work. Every entry links to its verification page at t
 
 | Project | What it is | Stack highlights |
 |---|---|---|
+| [Ensemble](https://github.com/Alex5350/ensemble) | A specialist AI agent bureau, orchestrated across Anthropic, Google, and OpenAI: one conductor routes, plans, and delegates while every token and cent lands in a live ledger | AI SDK v7, Next.js 16, React 19, TypeScript |
 | [Palisade](https://github.com/Alex5350/palisade) | Installation security fused into one operating picture: incidents that fire immediately, responses the system drives | .NET 10, Redis Streams, SQL Server, Avalonia |
 | [Corridor](https://github.com/Alex5350/corridor) | An ADFS-to-Okta identity migration: three apps cross with no downtime | .NET 10, OIDC/SAML/SCIM/XACML, CoreWCF, React |
 | [Atelier](https://github.com/Alex5350/atelier) | A creative AI studio that runs with zero API keys: chat with files, review-gated image passes, video, and honest cost accounting | Next.js, Bun, AI SDK, PostgreSQL + pgvector |
@@ -58,6 +59,57 @@ The credentials behind the work. Every entry links to its verification page at t
 | [VA OIG FWA Portal](https://github.com/Alex5350/USWDS-VA-Demo) | Prioritizes case review for analysts, without accusing anyone | .NET 10, SQL Server, USWDS, Section 508 |
 | [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web) | Double-entry bookkeeping with balance visible as you type | Blazor Interactive Auto, Tailwind |
 | [LedgerLite API](https://github.com/Alex5350/ledgerlite) | The books must balance: errors have nowhere to hide | .NET 10, EF Core, CQRS |
+
+---
+
+### [Ensemble](https://github.com/Alex5350/ensemble)
+
+<a href="https://github.com/Alex5350/ensemble">
+  <img src="https://raw.githubusercontent.com/Alex5350/ensemble/main/docs/screenshots/console-performing.png" alt="Ensemble's mission-control console mid-run: the conductor's four-task plan across Atlas, Forge, Sentinel and Quill; a live trace timeline where specialists take the stage and tools execute; the constellation map with active agents glowing; and a per-model cost ledger" width="100%">
+</a>
+
+Teams evaluating agent platforms usually see a chat box and a black box. Ensemble
+puts the orchestration itself on stage: a conductor agent classifies each
+request, plans the work, and delegates to a roster of specialists (an architect,
+a polyglot engineer, a documentation engineer, an illustrator, a video director,
+a research analyst, and a principal reviewer) across three model providers at
+once. Three orchestration patterns (route, delegate, relay) run through one
+engine, so you can compare their shapes on real work: one request fans out to an
+architecture brief on Gemini 3.1 Pro, a runnable TypeScript scaffold on
+GPT-5.6 Sol, a quality review on Claude Fable 5.1, and a steering-committee PDF,
+in dependency waves, while the console streams who is working, which model
+answered, and what it cost.
+
+**Business highlight:** every run is an auditable delivery. The live ledger
+prices each model call as it happens (flagship reasoning where it pays, economy
+tiers where tools do the heavy lifting), every artifact is a real file you can
+download, and the whole thing demos with zero API keys: a scripted provider
+replays authored model turns through the genuine agent loop, so the demo is
+deterministic, reproducible, and free, then switches to live calls the moment
+keys appear.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Built on the AI SDK v7 (the choice is argued in a proper ADR against LangGraph,
+the OpenAI Agents SDK, and Microsoft Agent Framework). Specialists are
+ToolLoopAgents whose lifecycle callbacks feed an append-only JSONL event
+stream; the console, the run archive, and the cost report all rebuild from that
+single log, so there is no second source of truth. Orchestration decisions are
+model calls surfaced as forced single-shot tools, which is what makes them
+work identically live (real providers via @ai-sdk/anthropic, google, openai)
+and scripted (a custom LanguageModelV4 that replays fixture turns; the AI SDK
+cannot tell the difference, so CI exercises the real code path keyless).
+Tools are deterministic and offline: ExcelJS workbooks, docx, pdf-lib reports,
+seeded-SVG illustration and storyboards (with a ready-to-execute Veo 3.1 plan),
+browsable code scaffolds, and a cited research corpus. pnpm monorepo
+(engine package + Next.js 16 console), 20 vitest tests that assert on real file
+bytes, 6 Playwright end-to-end tests driving scenarios through the browser
+keyless, CI plus gitleaks and CodeQL green, branch protection on main.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/ensemble/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
