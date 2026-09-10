@@ -22,7 +22,7 @@ The credentials behind the work. Every entry links to its verification page at t
 
 | Certification | Issuer |
 | --- | --- |
-| <a href="https://www.credly.com/badges/7d9934b2-72ac-46f6-8566-3183fa815f68" target="_blank">Claude Certified Architect - Foundations</a> | Anthropic |
+| [Claude Certified Architect - Foundations](https://www.credly.com/badges/7d9934b2-72ac-46f6-8566-3183fa815f68) | Anthropic |
 | [Azure AI Cloud Developer Associate](https://learn.microsoft.com/en-us/users/alextorres/credentials/c0bff2873ba23cda) | Microsoft |
 | [Azure AI Apps and Agents Developer Associate](https://learn.microsoft.com/en-us/users/alextorres/credentials/5041608fbe16de66) | Microsoft |
 | [AWS Certified Developer - Associate](https://www.credly.com/badges/8df8ecc7-f87f-48d3-917e-878088dc6e36/public_url) | Amazon Web Services |
@@ -201,7 +201,7 @@ Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/atelier/blob/main/TEC
 
 ### [Pacific Marines](https://github.com/Alex5350/tabs-pacific-marines)
 
-<a href="https://github.com/Alex5350/tabs-pacific-marines" target="_blank">
+<a href="https://github.com/Alex5350/tabs-pacific-marines">
   <img src="https://raw.githubusercontent.com/Alex5350/tabs-pacific-marines/main/docs/screenshots/hero-banner.png" alt="Pacific Marines hero: a C# mod adding a WWII Marine faction to Totally Accurate Battle Simulator, with five units, airstrikes, a mortar team, and buildable sandbag cover beside a live in-game capture" width="100%">
 </a>
 
