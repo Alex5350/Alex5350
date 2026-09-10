@@ -46,6 +46,7 @@ The credentials behind the work. Every entry links to its verification page at t
 | [Palisade](https://github.com/Alex5350/palisade) | Installation security fused into one operating picture: incidents that fire immediately, responses the system drives | .NET 10, Redis Streams, SQL Server, Avalonia |
 | [Corridor](https://github.com/Alex5350/corridor) | An ADFS-to-Okta identity migration: three apps cross with no downtime | .NET 10, OIDC/SAML/SCIM/XACML, CoreWCF, React |
 | [Atelier](https://github.com/Alex5350/atelier) | A creative AI studio that runs with zero API keys: chat with files, review-gated image passes, video, and honest cost accounting | Next.js, Bun, AI SDK, PostgreSQL + pgvector |
+| [TieOut](https://github.com/Alex5350/tieout) | The month-end close, tied out: one control tower for the CFO's two questions, with four-eyes sign-offs and a working-day clock | .NET 10, Blazor, EF Core + Dapper, PostgreSQL |
 | [Pacific Marines](https://github.com/Alex5350/tabs-pacific-marines) | A WWII Marine faction for Totally Accurate Battle Simulator, injected into the live game from C#: airstrikes, mortar crews, and cover troops actually build | C#, .NET Framework 4.7.2, BepInEx, Harmony, Unity |
 | [MediFlow](https://github.com/Alex5350/mediflow) | Medicare enrollment and claims done right: nothing half-paid, nothing lost | .NET 10, SQL Server, Blazor, MCP |
 | [Mintmark](https://github.com/Alex5350/mintmark) | A serious collector's tracker for gold and silver, where every number carries its provenance | .NET 10, PostgreSQL + pgvector, Next.js, Expo |
@@ -197,6 +198,47 @@ stranded by a missing field, and a static-linux ffmpeg build that ships
 without drawtext; each is fixed and pinned by a regression test.
 
 Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/atelier/blob/main/TECHNICAL.md)
+
+</details>
+
+---
+
+### [TieOut](https://github.com/Alex5350/tieout)
+
+<a href="https://github.com/Alex5350/tieout">
+  <img src="https://raw.githubusercontent.com/Alex5350/tieout/main/docs/screenshots/hero-banner.png" alt="TieOut hero: a dark control-tower dashboard for the month-end close with KPI strip, close pulse ring, days-to-close trend, bottlenecks, and live captures of the close board" width="100%">
+</a>
+
+Every finance team runs its month-end close over email and a shared spreadsheet, and
+every month the CFO asks the same two questions neither can answer: where is the
+close stuck right now, and why did it take six working days instead of five? TieOut
+is the control tower for that close: the checklist with its dependencies visible,
+sign-offs with separation of duties enforced by the system, a working-day clock that
+skips weekends and holidays (BD+n, so a close across Labor Day is measured honestly),
+bottleneck analytics that name the slowest category, and an append-only audit trail
+that turns "what happened in March?" into a query.
+
+**Business highlight:** the three controls are rules, not etiquette: a dependency
+only counts once signed, whoever completed a task can never be its signer (four-eyes),
+and a period locks only when every task is completed and only by the Controller or
+CFO. Every refusal names its rule and writes nothing.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+A Blazor web app over PostgreSQL 17 with the two ORMs used for what each does best:
+EF Core owns the command side (every state change and its audit event commit in one
+transaction), Dapper serves the dashboard's analytics with working days computed in
+SQL (generate_series minus weekends minus the holiday table). The seam is pinned by
+parity tests on a real database: the SQL answers must equal the pure C#
+WorkingDayCalendar's, or CI fails naming the month that drifted. The rule core is
+dependency-free C# (30 unit tests); 14 integration tests walk a full close to lock
+in dependency order; 9 Playwright tests drive the real browser; an 11-request
+newman regression replays the typed 409 contract. The demo company, Cedar Ridge
+Foods, is deterministic: five locked months of history and one live close mid-pain,
+reset with one click.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/tieout/blob/main/TECHNICAL.md)
 
 </details>
 
