@@ -91,10 +91,12 @@ frontmatter, links, scripts, secrets) so it cannot rot quietly.
 
 Hub-and-adapter architecture with one-line decision records: docs/ is canonical
 and adapters only point (a pointer cannot drift); skills live once in
-docs/skills as spec-conformant SKILL.md folders, and every harness's project
-skills directory (.claude, .codex, .opencode, .github) is a committed
-symlink to it, so a fresh clone serves Claude Code, Codex CLI, OpenCode, and
-Copilot with zero setup (bootstrap repairs links and wires user scope); the
+docs/skills and role agents (researcher, planner, reviewer) once in
+docs/agents, with every harness's skills directory (.claude, .codex,
+.opencode, .github) a committed symlink to the library and agent doors as
+committed per-file links plus generated Codex TOML, so a fresh clone serves
+Claude Code, Codex CLI, OpenCode, and Copilot with zero setup (bootstrap
+repairs doors and wires user scope); the
 Superpowers methodology is referenced and pinned per harness rather than
 vendored, and the gaps it leaves (tiered routing, work tracking, publishing)
 are filled by five original skills. scripts/work-item.sh is the single
