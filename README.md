@@ -43,6 +43,7 @@ The credentials behind the work. Every entry links to its verification page at t
 
 | Project | What it is | Stack highlights |
 |---|---|---|
+| [Arsenal](https://github.com/Alex5350/arsenal) | One shared hub for every AI coding agent on the team: skills, standards, and model routing that Claude Code, Codex CLI, OpenCode, and Copilot all read | AGENTS.md, Agent Skills (SKILL.md), MCP, bash |
 | [Ensemble](https://github.com/Alex5350/ensemble) | A specialist AI agent bureau, orchestrated across Anthropic, Google, and OpenAI: one conductor routes, plans, and delegates while every token and cent lands in a live ledger | AI SDK v7, Next.js 16, React 19, TypeScript |
 | [Palisade](https://github.com/Alex5350/palisade) | Installation security fused into one operating picture: incidents that fire immediately, responses the system drives | .NET 10, Redis Streams, SQL Server, Avalonia |
 | [Corridor](https://github.com/Alex5350/corridor) | An ADFS-to-Okta identity migration: three apps cross with no downtime | .NET 10, OIDC/SAML/SCIM/XACML, CoreWCF, React |
@@ -59,6 +60,52 @@ The credentials behind the work. Every entry links to its verification page at t
 | [VA OIG FWA Portal](https://github.com/Alex5350/USWDS-VA-Demo) | Prioritizes case review for analysts, without accusing anyone | .NET 10, SQL Server, USWDS, Section 508 |
 | [LedgerLite Web](https://github.com/Alex5350/ledgerlite-web) | Double-entry bookkeeping with balance visible as you type | Blazor Interactive Auto, Tailwind |
 | [LedgerLite API](https://github.com/Alex5350/ledgerlite) | The books must balance: errors have nowhere to hide | .NET 10, EF Core, CQRS |
+
+---
+
+### [Arsenal](https://github.com/Alex5350/arsenal)
+
+<a href="https://github.com/Alex5350/arsenal">
+  <img src="https://raw.githubusercontent.com/Alex5350/arsenal/main/docs/assets/hub-diagram.svg" alt="Arsenal hub diagram: four AI coding harnesses (Claude Code, Codex CLI, OpenCode, GitHub Copilot) pointing through thin adapter files into one central docs hub holding standards, workflows, models, skills, integrations, and the Superpowers methodology, with work tracking, CI validation, and releases as the outcomes" width="100%">
+</a>
+
+Teams adopt AI coding agents piecemeal, and within a quarter there are four
+half-overlapping rulebooks, unplanned model spend, and tests the agents
+quietly stopped running. Arsenal is the missing shared infrastructure: one
+docs/ hub that every harness reads through thin adapters (AGENTS.md,
+CLAUDE.md, copilot-instructions.md, opencode.json). Standards, a six-phase
+delivery loop with hard gates, tiered model routing where strategist models
+plan and review while executor models build, and work tracking that follows
+the work through GitHub Issues, Jira, or Azure DevOps are written once and
+read everywhere, on any tech stack.
+
+**Business highlight:** it is a GitHub template, so a team presses "Use this
+template," runs one bootstrap script, and every harness and every developer
+picks up the same skills and standards the same day. It is built only on the
+open standards the industry converged on (AGENTS.md, Agent Skills, MCP), so
+no vendor owns the workflow, and the hub validates itself in CI (skill
+frontmatter, links, scripts, secrets) so it cannot rot quietly.
+
+<details>
+<summary><b>Engineering view</b></summary>
+
+Hub-and-adapter architecture with one-line decision records: docs/ is canonical
+and adapters only point (a pointer cannot drift); skills live once in
+docs/skills as spec-conformant SKILL.md folders and fan out to each harness's
+directory by symlink (scripts/bootstrap.sh, with --dry-run and --remove); the
+Superpowers methodology is referenced and pinned per harness rather than
+vendored, and the gaps it leaves (tiered routing, work tracking, publishing)
+are filled by five original skills. scripts/work-item.sh is the single
+sanctioned caller of gh, Jira REST v3 (ADF), and az boards, exposing the same
+four subcommands across backends so swapping trackers is a config change.
+External facts (model names, harness paths) carry last-verified dates and
+live in single places for drift control. Validation is deliberately
+shell-only (frontmatter linter, link checker, shellcheck) plus gitleaks with
+SHA-pinned actions, CI green, branch protection on main.
+
+Full deep dive: [TECHNICAL.md](https://github.com/Alex5350/arsenal/blob/main/TECHNICAL.md)
+
+</details>
 
 ---
 
